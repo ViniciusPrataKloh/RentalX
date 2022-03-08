@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { createCategoryController } from "../models/cars/useCases/category/createCategory/Index.Category";
 import { listCategoryController } from "../models/cars/useCases/category/listCategories/Index.Category";
+import { importCategoryController } from "../models/cars/useCases/category/importCategory/Index.Category";
+
 import multer from "multer";
 
 const categoriesRoutes = Router();
 
-const upload = multer({
-    dest: "./tmp"
-});
+const upload = multer({ dest: "./tmp" });
 
 categoriesRoutes.post("/", (request, response) => {
     return createCategoryController.handle(request, response);
@@ -18,13 +18,8 @@ categoriesRoutes.get("/", (request, response) => {
 });
 
 categoriesRoutes.post("/import", upload.single("file"), (request, response) => {
-    const { file } = request;
-    console.log(file);
-    return response.send();
+    return importCategoryController.handle(request, response);
 });
 
-export { categoriesRoutes };
 
-function multer(arg0: { dest: string; }) {
-    throw new Error("Function not implemented.");
-}
+export { categoriesRoutes };
