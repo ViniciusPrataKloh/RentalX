@@ -5,11 +5,17 @@ class CreateSpecificationController {
     constructor(private createSpecificationService: CreateSpecificationService) { }
 
     handle(request: Request, response: Response): Response {
-        const { name, description } = request.body;
+        try {
+            const { name, description } = request.body;
 
-        this.createSpecificationService.execute({ name, description });
+            this.createSpecificationService.execute({ name, description });
 
-        return response.status(201).json();
+            return response.status(201).json();
+        } catch (err) {
+            return response.status(501).json({
+                message: err.message
+            });
+        }
     }
 }
 

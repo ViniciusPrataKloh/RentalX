@@ -5,11 +5,17 @@ class CreateCategoryController {
     constructor(private createCategoryService: CreateCategoryService) { }
 
     handle(request: Request, response: Response): Response {
-        const { name, description } = request.body;
+        try {
+            const { name, description } = request.body;
 
-        this.createCategoryService.execute({ name, description });
+            this.createCategoryService.execute({ name, description });
 
-        return response.status(201).json();
+            return response.status(201).json();
+        } catch (err) {
+            return response.status(501).json({
+                message: err.message
+            });
+        }
     }
 }
 
