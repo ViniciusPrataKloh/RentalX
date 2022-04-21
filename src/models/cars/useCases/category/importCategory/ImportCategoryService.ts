@@ -9,7 +9,7 @@ interface IImportCategory {
 }
 
 class ImportCategoryService {
-    constructor(private categoryRepository: ICategoryRepository) { }
+    constructor(private categoriesRepository: ICategoryRepository) { }
 
     loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
         return new Promise((resolve, reject) => {
@@ -45,13 +45,10 @@ class ImportCategoryService {
         categories.map(async (category) => {
             const { name, description } = category;
 
-            const alreadyExists = this.categoryRepository.findCategory(name);
+            const alreadyExists = await this.categoriesRepository.findCategory(name);
 
             if (!alreadyExists) {
-                this.categoryRepository.create({
-                    name,
-                    description
-                });
+                this.categoriesRepository.create({ name, description });
             }
         });
     }
