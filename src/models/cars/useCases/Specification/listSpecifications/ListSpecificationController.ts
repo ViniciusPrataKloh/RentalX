@@ -4,8 +4,8 @@ import { ListSpecificationService } from "./ListSpecificationService";
 class ListSpecificationController {
     constructor(private listSpecificationService: ListSpecificationService) { }
 
-    handle(request: Request, response: Response): Response {
-        const specifications = this.listSpecificationService.execute();
+    async handle(request: Request, response: Response): Promise<Response> {
+        const specifications = await this.listSpecificationService.execute();
         return response.status(201).json(specifications);
     }
 }
