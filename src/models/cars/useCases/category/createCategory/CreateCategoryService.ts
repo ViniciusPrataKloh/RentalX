@@ -10,7 +10,8 @@ interface IRequest {
 class CreateCategoryService {
     constructor(
         @inject("CategoriesRepository")
-        private categoriesRepository: ICategoryRepository) { };
+        private categoriesRepository: ICategoryRepository
+    ) { };
 
     async execute({ name, description }: IRequest): Promise<void> {
         const categoryAlreadyExists = await this.categoriesRepository.findCategory(name);
