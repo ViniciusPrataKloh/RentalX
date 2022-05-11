@@ -20,7 +20,8 @@ class UsersRepository implements IUsersRepository {
             driver_license
         });
 
-        await this.repository.create(user);
+        await this.repository.save(user);
+        console.log(user);
     }
 }
 
