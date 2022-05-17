@@ -9,9 +9,9 @@ class AuthenticateUserController {
 
             const authenticateUserService = container.resolve(AuthenticateUserService);
 
-            const jwt = authenticateUserService.execute({ email, password });
+            const userToken = await authenticateUserService.execute({ email, password });
 
-            return response.status(200).json(jwt);
+            return response.status(200).json(userToken);
         } catch (err) {
             return response.status(501).json({
                 message: err.message
