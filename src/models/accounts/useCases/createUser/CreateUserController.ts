@@ -18,7 +18,6 @@ class CreateUserController {
                 message: err.message
             });
         }
-
     }
 }
 

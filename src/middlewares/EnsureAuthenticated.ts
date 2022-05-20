@@ -7,7 +7,11 @@ interface IPayLoad {
     sub: string;
 }
 
-export async function ensureAuthenticated(req: Request, res: Response, next: NextFunction) {
+interface IMyRequest extends Request {
+    user_id: string;
+}
+
+export async function ensureAuthenticated(req: IMyRequest, res: Response, next: NextFunction) {
 
     const authHeader = req.headers.authorization;
 
@@ -26,6 +30,8 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
         if (!validatedUser) {
             throw new AppError("Invalid token.", 401);
         }
+
+        req.user_id = user_id;
 
         next();
     } catch {
