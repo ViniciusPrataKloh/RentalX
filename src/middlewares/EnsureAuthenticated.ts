@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { decode, verify } from "jsonwebtoken";
-import { AppError } from "../errors/app.error";
+import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken";
+
+import { AppError } from "@errors/app.error";
 import { UsersRepository } from "../models/accounts/repositories/implementations/UsersRepository";
 
 interface IPayLoad {
