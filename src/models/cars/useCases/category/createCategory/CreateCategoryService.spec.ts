@@ -24,7 +24,6 @@ describe("Create Category", () => {
         });
 
         const createdCategory = categoriesRepositoryInMemory.findCategory(category.name);
-        console.log(createdCategory);
 
         expect(createdCategory).toBeTruthy();
     });

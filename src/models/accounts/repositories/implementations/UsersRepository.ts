@@ -22,7 +22,6 @@ class UsersRepository implements IUsersRepository {
         });
 
         await this.repository.save(user);
-        console.log(user);
     }
 
     async findUser(email: string): Promise<User | null> {
