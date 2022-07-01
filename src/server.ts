@@ -1,20 +1,22 @@
-import "reflect-metadata";
 import express from "express";
 import "express-async-errors";
+import "reflect-metadata";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./swaggerFile.json";
 
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { categoriesRoutes } from "./routes/categories.routes";
 import { specificationsRoutes } from "./routes/specifications.routes";
 import { usersRoutes } from "./routes/users.routes";
 
-import "./database/index.ts";
-import "./shared/container";
-import { authenticateRoutes } from "./routes/authenticate.routes";
+import createConnection from "./database";
 import { AppError } from "./errors/app.error";
+import { authenticateRoutes } from "./routes/authenticate.routes";
+import { carsRoutes } from "./routes/cars.routes";
+import "./shared/container";
 
+createConnection();
 const app = express();
 app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
@@ -22,6 +24,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/categories", categoriesRoutes);
 app.use("/specifications", specificationsRoutes);
 app.use("/users", usersRoutes);
+app.use("/cars", carsRoutes);
 app.use(authenticateRoutes);
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
