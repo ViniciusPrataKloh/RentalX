@@ -17,6 +17,7 @@ import { carsRoutes } from "./routes/cars.routes";
 import "./shared/container";
 
 createConnection();
+
 const app = express();
 app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
