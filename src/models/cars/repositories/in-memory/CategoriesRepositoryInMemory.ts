@@ -6,7 +6,7 @@ class CategoriesRepositoryInMemory implements ICategoryRepository {
 
     categories: Category[] = [];
 
-    async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+    async create({ name, description }: ICreateCategoryDTO): Promise<Category> {
         const category = new Category();
 
         Object.assign(category, {
@@ -15,6 +15,8 @@ class CategoriesRepositoryInMemory implements ICategoryRepository {
         });
 
         this.categories.push(category);
+
+        return category;
     }
     async list(): Promise<Category[]> {
         return this.categories;

@@ -2,6 +2,7 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../../errors/app.error";
 import { ICategoryRepository } from "../../../../cars/repositories/interfaces/ICategoryRepository";
+import { Category } from "../../../entities/Category";
 
 interface IRequest {
     name: string;
@@ -15,14 +16,16 @@ class CreateCategoryService {
         private categoriesRepository: ICategoryRepository
     ) { }
 
-    async execute({ name, description }: IRequest): Promise<void> {
+    async execute({ name, description }: IRequest): Promise<Category> {
         const categoryAlreadyExists = await this.categoriesRepository.findCategory(name);
 
         if (categoryAlreadyExists) {
             throw new AppError("Category already exists!");
         }
 
-        await this.categoriesRepository.create({ name, description });
+        const category = await this.categoriesRepository.create({ name, description });
+
+        return category;
     }
 }
 
