@@ -34,6 +34,12 @@ class CarsRepository implements ICarRepository {
         return car;
     }
 
+    async findAvailableCars(): Promise<Car[] | null> {
+        const cars = this.repository.find({ available: true });
+
+        return cars;
+    }
+
 }
 
 export { CarsRepository };
