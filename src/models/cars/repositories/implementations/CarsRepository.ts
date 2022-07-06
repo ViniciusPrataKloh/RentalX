@@ -29,17 +29,27 @@ class CarsRepository implements ICarRepository {
     }
 
     async findCarByLicensePlate(license_plate: string): Promise<Car> {
-        const car = this.repository.findOne({ license_plate });
+        const car = await this.repository.findOne({ license_plate });
 
         return car;
     }
 
-    async findAvailableCars(): Promise<Car[] | null> {
-        const cars = this.repository.find({ available: true });
+    async findAvailableCars(category_id: string, brand?: string, name?: string): Promise<Car[]> {
+        const query = this.repository
+            .createQueryBuilder("c")
+            .where("available = :available", { available: true });
+
+        if (brand) {
+            query.andWhere("brand = :brand", { brand });
+        }
+        if (name) {
+            query.andWhere("name = :name", { name });
+        }
+
+        const cars = await query.getMany();
 
         return cars;
     }
-
 }
 
 export { CarsRepository };

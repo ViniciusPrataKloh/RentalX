@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { ICarRepository } from "../../../repositories/interfaces/ICarRepository";
 
 interface IRequest {
@@ -6,9 +7,11 @@ interface IRequest {
     name?: string;
 }
 
+@injectable()
 class ListAvailableCarService {
 
     constructor(
+        @inject("CarsRepository")
         private carsRepository: ICarRepository
     ) { }
 
