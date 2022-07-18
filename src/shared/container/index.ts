@@ -12,6 +12,9 @@ import { IUsersRepository } from "../../models/accounts/repositories/interfaces/
 import { CarsRepository } from "../../models/cars/repositories/implementations/CarsRepository";
 import { ICarRepository } from "../../models/cars/repositories/interfaces/ICarRepository";
 
+import { CarImagesRepository } from "../../models/cars/repositories/implementations/CarImagesRepository";
+import { ICarImagesRepository } from "../../models/cars/repositories/interfaces/ICarImages";
+
 // Categories
 container.registerSingleton<ICategoryRepository>(
     "CategoriesRepository",
@@ -34,4 +37,10 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<ICarRepository>(
     "CarsRepository",
     CarsRepository
+);
+
+// Car Images
+container.registerSingleton<ICarImagesRepository>(
+    "CarImagesRepository",
+    CarImagesRepository
 );
