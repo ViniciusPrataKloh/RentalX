@@ -62,7 +62,7 @@ describe("Create Rental", () => {
             const rental = await createRentalService.execute({
                 car_id: "28a1e5ee-164b-4508-8081-1071a5123c3c",
                 user_id: "f57db2dd-8f3a-4523-a975-709542483640",
-                expected_return_date: new Date()
+                expected_return_date: dayjs().toDate()
             });
         }).rejects.toBeInstanceOf(AppError);
     });
