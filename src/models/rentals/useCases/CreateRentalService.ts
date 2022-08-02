@@ -1,11 +1,7 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-
 import { AppError } from "../../../errors/app.error";
+import { IDayjsDateProvider } from "../../../shared/providers/dateProvider/interfaces/IDayjsDateProvider";
 import { Rental } from "../entities/Rental";
 import { IRentalsRepository } from "../repositories/interfaces/IRentalRepository";
-
-dayjs.extend(utc);
 
 interface IRequest {
     car_id: string;
@@ -14,7 +10,10 @@ interface IRequest {
 }
 
 class CreateRentalService {
-    constructor(private rentalsRepository: IRentalsRepository) { }
+    constructor(
+        private dayjsDateProvider: IDayjsDateProvider,
+        private rentalsRepository: IRentalsRepository
+    ) { }
 
     async execute({ car_id, user_id, expected_return_date }: IRequest): Promise<Rental> {
 
@@ -38,11 +37,7 @@ class CreateRentalService {
             expected_return_date
         });
 
-        const dateNow = dayjs().utc().local().format();
-
-        const expectedReturnDateFormat = dayjs(expected_return_date).utc().local().format();
-
-        const comparedDate = dayjs(expectedReturnDateFormat).diff(dateNow, "hours");
+        const comparedDate = this.dayjsDateProvider.compareInHours(expected_return_date);
 
         if (comparedDate < minimumHour) {
             throw new AppError("The expected return date has less than 24h");
