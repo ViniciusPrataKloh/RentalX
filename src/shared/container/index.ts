@@ -1,5 +1,7 @@
 import { container } from "tsyringe";
 
+import "../providers/dateProvider";
+
 import { CategoriesRepository } from "../../models/cars/repositories/implementations/CategoriesRepository";
 import { ICategoryRepository } from "../../models/cars/repositories/interfaces/ICategoryRepository";
 
@@ -14,6 +16,10 @@ import { ICarRepository } from "../../models/cars/repositories/interfaces/ICarRe
 
 import { CarImagesRepository } from "../../models/cars/repositories/implementations/CarImagesRepository";
 import { ICarImagesRepository } from "../../models/cars/repositories/interfaces/ICarImages";
+
+import { RentalsRepository } from "../../models/rentals/repositories/implementations/RentalsRepository";
+import { IRentalsRepository } from "../../models/rentals/repositories/interfaces/IRentalRepository";
+
 
 // Categories
 container.registerSingleton<ICategoryRepository>(
@@ -43,4 +49,10 @@ container.registerSingleton<ICarRepository>(
 container.registerSingleton<ICarImagesRepository>(
     "CarImagesRepository",
     CarImagesRepository
+);
+
+// Rentals
+container.registerSingleton<IRentalsRepository>(
+    "RentalsRepository",
+    RentalsRepository
 );

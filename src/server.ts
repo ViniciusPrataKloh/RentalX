@@ -14,6 +14,7 @@ import createConnection from "./database";
 import { AppError } from "./errors/app.error";
 import { authenticateRoutes } from "./routes/authenticate.routes";
 import { carsRoutes } from "./routes/cars.routes";
+import { rentalsRoutes } from "./routes/rentals.routes";
 import "./shared/container";
 
 createConnection();
@@ -26,6 +27,7 @@ app.use("/categories", categoriesRoutes);
 app.use("/specifications", specificationsRoutes);
 app.use("/users", usersRoutes);
 app.use("/cars", carsRoutes);
+app.use("/rentals", rentalsRoutes);
 app.use(authenticateRoutes);
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {

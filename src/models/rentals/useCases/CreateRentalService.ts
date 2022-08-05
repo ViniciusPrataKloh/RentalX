@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../errors/app.error";
 import { IDayjsDateProvider } from "../../../shared/providers/dateProvider/interfaces/IDayjsDateProvider";
 import { Rental } from "../entities/Rental";
@@ -9,9 +10,13 @@ interface IRequest {
     expected_return_date: Date;
 }
 
+@injectable()
 class CreateRentalService {
     constructor(
+        @inject("DayjsDateProvider")
         private dayjsDateProvider: IDayjsDateProvider,
+
+        @inject("RentalsRepository")
         private rentalsRepository: IRentalsRepository
     ) { }
 
@@ -31,17 +36,17 @@ class CreateRentalService {
             throw new AppError("There is a rental in progress for this user");
         }
 
-        const rental = await this.rentalsRepository.create({
-            car_id,
-            user_id,
-            expected_return_date
-        });
-
         const comparedDate = this.dayjsDateProvider.compareInHours(expected_return_date);
 
         if (comparedDate < minimumHour) {
             throw new AppError("The expected return date has less than 24h");
         }
+
+        const rental = await this.rentalsRepository.create({
+            car_id,
+            user_id,
+            expected_return_date
+        });
 
         return rental;
     }
