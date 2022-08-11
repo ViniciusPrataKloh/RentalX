@@ -34,6 +34,9 @@ class Rental {
         if (!this.id) {
             this.id = uuidV4();
         }
+        if (!this.start_date) {
+            this.start_date = new Date();
+        }
     }
 }
 
